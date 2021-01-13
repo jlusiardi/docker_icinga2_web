@@ -1,11 +1,13 @@
-FROM debian:8.7
+FROM debian:buster
 
 ENV DEBIAN_FRONTEND noninteractive
 
 ADD icinga.key /tmp/icinga.key
 
-RUN apt-key add /tmp/icinga.key; \
-    echo 'deb http://packages.icinga.com/debian icinga-jessie main' > /etc/apt/sources.list.d/icinga.list; \
+RUN apt-get update -y; \
+    apt-get install -y gnupg2; \ 
+    apt-key add /tmp/icinga.key; \
+    echo 'deb http://packages.icinga.com/debian icinga-buster main' > /etc/apt/sources.list.d/icinga.list; \
     apt-get update -y; \
     apt-get install -y icingaweb2; 
 
