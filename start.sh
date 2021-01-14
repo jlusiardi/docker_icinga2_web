@@ -6,13 +6,13 @@ if [ "$MODE" == "init" ]; then
     echo "**********************"
     echo "*    preparing...    *"
     echo "**********************"
-    apt install -y -q mysql-client
+    apt install -y -q mariadb-client
     DB_UTIL="mysql -u root -p$MYSQL_AUTH_ENV_MYSQL_ROOT_PASSWORD -h mysql_auth $MYSQL_AUTH_ENV_MYSQL_DATABASE"
     echo "*************************"
     echo "*    initializing...    *"
     echo "*************************"
     ${DB_UTIL}  < /usr/share/icingaweb2/etc/schema/mysql.schema.sql
-    read -s -p "Password for user 'icinga': " PASSWORD
+    #read -s -p "Password for user 'icinga': " PASSWORD
     echo
     HASH=`openssl passwd -1 ${PASSWORD}`
     echo "INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('icinga', 1, '$HASH');" | ${DB_UTIL}
